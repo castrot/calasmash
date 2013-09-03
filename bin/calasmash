@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'calasmash'
+
+Calasmash::Runner.new(ARGV)
