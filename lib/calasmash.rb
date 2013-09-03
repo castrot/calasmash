@@ -10,9 +10,11 @@ module Calasmash
 
 		def initialize(args)
 			@options = parse(args)
-			start
-		end
-
+			if @options[:valid] 
+      			start
+    		end
+		end	
+		
 		def start
 			puts "Starting..."
 			compile
@@ -21,15 +23,12 @@ module Calasmash
 		end
 
 		def parse(args)
-			options = {}
+			options = {}	
 			@opt_parser = OptionParser.new do |opt|
-		  		opt.banner = "Usage: calasmash COMMAND [OPTIONS]"
-		  		opt.separator  ""
-		  		opt.separator  "Commands"
-		  		opt.separator  "     run: run the tests"
+		  		opt.banner = "Usage: calasmash [OPTIONS]"
 		  		opt.separator  ""
 		  		opt.separator  "Options"
-
+		  
 				opt.on("-t","--tags TAGS","the tags to test against") do |tags|
 				    options[:tags] = tags
 				end
@@ -43,11 +42,25 @@ module Calasmash
 				end
 
 				opt.on("-h","--help","help") do
-				  puts opt_parser
+				  puts @opt_parser
 				end
 			end
 
 			@opt_parser.parse! args
+
+			options[:valid] = true
+
+			validate_options(options)
+		end
+
+		def validate_options(options)
+			if options[:workspace].nil?
+				puts "Workspace path required, see --help for more information"
+				options[:valid] = false
+			elsif options[:scheme].nil?
+				puts "Scheme required, see --help for more information"
+				options[:valid] = false
+			end
 			options
 		end
 
