@@ -1,4 +1,5 @@
-# Calasmash
+calasmash
+=========
 
 TODO: Write a gem description
 
