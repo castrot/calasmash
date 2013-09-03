@@ -1,7 +1,7 @@
 calasmash
 =========
 
-TODO: Write a gem description
+A hacky gem to compile a calabash ios target, set some settings bundle values then run cucumber tests
 
 ## Installation
 
@@ -19,7 +19,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Simply run the command below and pass valid options, workspace and scheme are required. 
+
+    calasmash
+
+### Options
+
+    -t, --tags TAGS                  the cucumber tags to test against
+    -w, --workspace WORKSPACE        the workspace to build
+    -s, --scheme SCHEME              the scheme to build
+    -h, --help                       help
 
 ## Contributing
 
