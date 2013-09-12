@@ -79,10 +79,15 @@ module Calasmash
 
 			plist_file = CFPropertyList::List.new(:file => plist_path)
 			plist = CFPropertyList.native_types(plist_file.value)
+		
 			plist["url_preference"] = ip
 			plist["port_preference"] = port
+
+			puts("plist: #{plist}")
+
 			plist_file.value = CFPropertyList.guess(plist)
-			plist_file.save(plist_path, CFPropertyList::List::FORMAT_BINARY)
+			plist_file.save(plist_path, CFPropertyList::List::FORMAT_XML)
+
 		end
 
 		def run_cucumber
@@ -92,16 +97,22 @@ module Calasmash
 			}
 		end
 
-		def plist_path
-			# find the .app
+		def app_path
 			files = []
-			Find.find("#{File.expand_path('~')}/Library/Application\ Support/iPhone\ Simulator/7.0/Applications") do |path|
+			
+			Find.find("#{File.expand_path('~')}/Library/Developer/Xcode/DerivedData/") do |path|
   				files << path if path =~ /#{@options[:scheme]}.app$/
 			end
-			app_path = files.sort_by { |filename| File.mtime(filename)}.last # get the latest
-			plist_path = app_path.gsub("laterooms-cal.app", "Library/Preferences/com.ustwo.#{@options[:scheme]}.plist")
 
-			plist_path
+			app_path = files.sort_by { |filename| File.mtime(filename)}.last # get the latest
+
+			return app_path
+		end 
+
+		def plist_path
+			
+			plist_path = app_path + "/server_config.plist"
+		 	return plist_path
 		end
 	end
 end
