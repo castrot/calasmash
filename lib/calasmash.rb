@@ -19,6 +19,7 @@ module Calasmash
 			puts "Starting..."
 			compile
 			update_plist
+			sleep(2)
 			run_cucumber
 		end
 
@@ -66,7 +67,7 @@ module Calasmash
 
 		def compile
 			puts "Compiling..."
-			IO.popen("xcodebuild -workspace #{@options[:workspace]} -scheme #{@options[:scheme]} CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO") {|output|
+			IO.popen("xcodebuild -workspace #{@options[:workspace]} -scheme #{@options[:scheme]} -sdk iphonesimulator CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO") {|output|
 				puts output.read
 			}
 		end
