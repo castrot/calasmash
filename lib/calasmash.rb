@@ -12,6 +12,8 @@ module Calasmash
 			@options = parse(args)
 			if @options[:valid] 
       			start
+      		else
+      			puts "Invalid options!"
     		end
 		end	
 		
@@ -44,6 +46,16 @@ module Calasmash
 
 				opt.on("-h","--help","help") do
 				  puts @opt_parser
+				end
+
+				opt.on('-f', "--format FORMAT", "test report format e.g. junit") do |tags|
+					puts @opt_parser
+					options[:format] = tags
+				end
+
+				opt.on('-o', "--out OUTPUT", "test report output path e.g. test") do |tags|
+					puts @opt_parser
+					options[:out] = tags
 				end
 			end
 
@@ -93,7 +105,16 @@ module Calasmash
 
 		def run_cucumber
 			puts "Running cucumber..."
-			IO.popen("cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator --tags #{@options[:tags]} --format junit --out test-reports/bdd") {|output|
+
+			optional_params = ""
+			if(@options[:out] && @options[:format])
+				optional_params = "--format #{@options[:format]} --out #{@options[:output]} "
+			end
+
+			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator --tags #{@options[:tags]}"
+			cucumber_command += optional_params
+
+			IO.popen(cucumber_command) {|output|
 				puts output.read
 			}
 		end
