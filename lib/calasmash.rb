@@ -93,7 +93,7 @@ module Calasmash
 
 		def run_cucumber
 			puts "Running cucumber..."
-			IO.popen("cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator --tags #{@options[:tags]}") {|output|
+			IO.popen("cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator --tags #{@options[:tags]} --format junit --out test-reports/bdd") {|output|
 				puts output.read
 			}
 		end
