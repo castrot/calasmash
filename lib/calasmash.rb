@@ -125,6 +125,9 @@ module Calasmash
 			IO.popen(cucumber_command) {|output|
 				puts output.read
 			}
+
+			# exit with whatever status cucumber has exited
+			exit $?.to_i
 		end
 
 		def app_path
