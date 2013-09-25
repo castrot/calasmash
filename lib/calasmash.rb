@@ -81,6 +81,11 @@ module Calasmash
 			IO.popen("xcodebuild -workspace #{@options[:workspace]} -scheme #{@options[:scheme]} -sdk iphonesimulator CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO") {|output|
 				puts output.read
 			}
+
+			if $?.to_i > 0
+				puts "Compilation failed"
+				exit $?.to_i
+			end
 		end
 
 		def update_plist
