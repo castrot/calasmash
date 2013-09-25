@@ -49,12 +49,10 @@ module Calasmash
 				end
 
 				opt.on('-f', "--format FORMAT", "test report format e.g. junit") do |tags|
-					puts @opt_parser
 					options[:format] = tags
 				end
 
 				opt.on('-o', "--out OUTPUT", "test report output path e.g. test") do |tags|
-					puts @opt_parser
 					options[:out] = tags
 				end
 			end
@@ -64,6 +62,7 @@ module Calasmash
 			options[:valid] = true
 
 			validate_options(options)
+			return options
 		end
 
 		def validate_options(options)
@@ -108,10 +107,14 @@ module Calasmash
 
 			optional_params = ""
 			if(@options[:out] && @options[:format])
-				optional_params = "--format #{@options[:format]} --out #{@options[:output]} "
+				optional_params = " --format #{@options[:format]} --out #{@options[:out]} "
 			end
 
-			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator --tags #{@options[:tags]}"
+			if(@options[:tags])
+				optional_params += " --tags #{@options[:tags]}"
+			end
+
+			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator"
 			cucumber_command += optional_params
 
 			IO.popen(cucumber_command) {|output|
