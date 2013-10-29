@@ -4,6 +4,7 @@ require 'optparse'
 require 'socket'
 require 'cfpropertylist'
 require 'find'
+require 'open3'
 
 module Calasmash
 	class Runner
@@ -78,13 +79,26 @@ module Calasmash
 
 		def compile
 			puts "Compiling..."
-			IO.popen("xcodebuild -workspace #{@options[:workspace]} -scheme #{@options[:scheme]} -sdk iphonesimulator CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO") {|output|
-				puts output.read
-			}
 
-			if $?.to_i > 0
-				puts "Compilation failed"
-				exit $?.to_i
+			status = nil
+			xcode_command = "xcodebuild -workspace #{@options[:workspace]} -scheme #{@options[:scheme]} -sdk iphonesimulator CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO"
+			Open3.popen3 xcode_command do |stdin, out, err, wait_thr|
+
+				[out, err].each do |stream|
+					Thread.new do
+						until (line = stream.gets).nil? do
+							puts line
+						end
+					end
+				end
+
+				wait_thr.join
+				status = wait_thr.value.exitstatus
+			end
+
+			if status != 0
+				puts "Compilation failed: #{status}"
+				exit status
 			end
 		end
 
@@ -122,12 +136,27 @@ module Calasmash
 			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator"
 			cucumber_command += optional_params
 
-			IO.popen(cucumber_command) {|output|
-				puts output.read
-			}
+			status = nil
+			Open3.popen3 cucumber_command do |stdin, out, err, wait_thr|
 
-			# exit with whatever status cucumber has exited
-			exit $?.to_i
+				[out, err].each do |stream|
+					Thread.new do
+						until (line = stream.gets).nil? do
+							puts line
+						end
+					end
+				end
+
+				wait_thr.join
+				status = wait_thr.value.exitstatus
+			end
+
+			if status != 0
+				puts "Cucumber failed: #{status}"
+			end
+
+			# exit with whatever status Cucumber has exited
+			exit status
 		end
 
 		def app_path
