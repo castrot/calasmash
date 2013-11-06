@@ -27,14 +27,15 @@ module Calasmash
 		end
 
 		def parse(args)
-			options = {}	
+			options = {}
+			options[:tags] = []	
 			@opt_parser = OptionParser.new do |opt|
 		  		opt.banner = "Usage: calasmash [OPTIONS]"
 		  		opt.separator  ""
 		  		opt.separator  "Options"
 		  
-				opt.on("-t","--tags TAGS","the tags to test against") do |tags|
-				    options[:tags] = tags
+				opt.on("-t","--tags TAGS","the tags to pass to Cucumber") do |tag_set|
+				    options[:tags] << tag_set
 				end
 
 				opt.on("-w","--workspace WORKSPACE","the workspace to build") do |tags|
@@ -130,7 +131,9 @@ module Calasmash
 			end
 
 			if(@options[:tags])
-				optional_params += " --tags #{@options[:tags]}"
+				@options[:tags].each do |tag_set|
+					optional_params += " --tags #{tag_set}"					
+				end
 			end
 
 			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator"
