@@ -22,6 +22,7 @@ module Calasmash
 			puts "Starting..."
 			compile
 			update_plist
+			delete_simulator_plist
 			sleep(2)
 			run_cucumber
 		end
@@ -56,6 +57,10 @@ module Calasmash
 
 				opt.on('-o', "--out OUTPUT", "test report output path e.g. test") do |tags|
 					options[:out] = tags
+				end
+
+				opt.on('-ios', "--ios OS", "iOS simulator version of the sdk to run e.g. 6.0 or 7.0") do |tags|
+					options[:ios] = tags
 				end
 			end
 
@@ -122,9 +127,22 @@ module Calasmash
 
 		end
 
+		def delete_simulator_plist
+			puts "Deleting simulator plist..."
+			# Delete last known simulator preference to prevent running in the wrong simulator
+			 FileUtils.rm(simulator_plist_path, :force => true)
+		end
+
 		def run_cucumber
 			puts "Running cucumber..."
 
+			# Which iOS simulator to run if specified else uses default for the platform
+			os_params = ""
+			if(@options[:ios])
+				os = @options[:ios]
+				os_params = " OS=ios#{os.to_i} SDK_VERSION=#{os}"
+			end
+			
 			optional_params = ""
 			if(@options[:out] && @options[:format])
 				optional_params = " --format #{@options[:format]} --out #{@options[:out]} "
@@ -136,8 +154,12 @@ module Calasmash
 				end
 			end
 
-			cucumber_command = "cucumber OS=ios7 SDK_VERSION=7.0 DEVICE_TARGET=simulator"
+			cucumber_command = "cucumber"
+			cucumber_command += os_params
+			cucumber_command += " DEVICE_TARGET=simulator"
 			cucumber_command += optional_params
+
+			puts("#{cucumber_command}")
 
 			status = nil
 			Open3.popen3 cucumber_command do |stdin, out, err, wait_thr|
@@ -178,6 +200,10 @@ module Calasmash
 			
 			plist_path = app_path + "/server_config.plist"
 		 	return plist_path
+		end
+
+		def simulator_plist_path
+			return "#{File.expand_path('~')}/Library/Preferences/com.apple.iphonesimulator.plist"
 		end
 	end
 end
