@@ -26,7 +26,9 @@ module Calasmash
         options = parse(args)
 
         # Compile the project
-        compile(options[:scheme])
+        compile(options[:scheme]) do
+          puts "Plist stuff now"
+        end
       end
 
       #
@@ -55,9 +57,17 @@ module Calasmash
         return options
       end
 
-      def compile(scheme)
+      #
+      # Kick off a compile
+      # @param  scheme [String] The scheme to compile
+      # @param  &compiled [Block] Completion block
+      #
+      # @return [type] [description]
+      def compile(scheme, &compiled)
         compiler = Calasmash::Compiler.new(scheme)
-        compiler.compile
+        compiler.compile do |complete|
+          yield
+        end
       end
 
       #
