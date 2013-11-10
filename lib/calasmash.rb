@@ -1,5 +1,8 @@
-require "calasmash/version"
+#!/usr/bin/env ruby
+# coding: utf-8
+
 require 'calasmash/command'
+require 'calasmash/compiler'
 
 module Calasmash
   VERSION = "1.0.0"
