@@ -1,5 +1,4 @@
 # coding: utf-8
-require "open3"
 
 module Calasmash
 
@@ -25,9 +24,7 @@ module Calasmash
     #
     # Returns nothing because it completes with a complete block
     def compile &complete
-
       status = nil
-
       xcode_command = "xcodebuild -workspace #{workspace} \
                        -scheme #{@scheme} \
                        -sdk iphonesimulator \
@@ -38,7 +35,7 @@ module Calasmash
         [out, err].each do |stream|
           Thread.new do
             until (line = stream.gets).nil? do
-              puts line
+              print "."
             end
           end
         end
@@ -47,8 +44,10 @@ module Calasmash
       end
 
       if status != 0
-        puts "Compilation failed: #{status}"
+        puts "\n Compilation failed: #{status}"
         exit status
+      else
+        puts "\nCompiled 👌"
       end
     end
 
@@ -58,7 +57,7 @@ module Calasmash
     #
     # @return [String] The name of the workspace file that was found
     def workspace
-      "laterooms-ios.xcworkspace"
+      "laterooms.xcworkspace"
     end
 
   end

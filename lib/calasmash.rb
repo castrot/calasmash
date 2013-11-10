@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
+require 'optparse'
+require "open3"
+
 require 'calasmash/command'
 require 'calasmash/compiler'
 
