@@ -24,6 +24,7 @@ module Calasmash
     #
     # Returns nothing because it completes with a complete block
     def compile(&complete)
+      puts "\nCompiling\n"
       status = nil
       output = ""
       xcode_command = "xcodebuild -workspace #{workspace} \
@@ -31,7 +32,6 @@ module Calasmash
                        -sdk iphonesimulator \
                        CODE_SIGN_IDENTITY="" \
                        CODE_SIGNING_REQUIRED=NO"
-
       Open3.popen3 xcode_command do |stdin, out, err, wait_thr|
         [out, err].each do |stream|
           Thread.new do
@@ -49,7 +49,7 @@ module Calasmash
         puts "\n Compilation failed: \n\n #{output}"
         exit status
       else
-        puts "\nCompiled 👌"
+        puts "\n\nCompiled 👌"
         complete.call(true) if complete
       end
     end

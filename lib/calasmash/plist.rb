@@ -31,7 +31,7 @@ module Calasmash
       update
       clear
 
-      puts "\n Plist updated 👌"
+      puts "Plist updated 👌"
     end
 
     private
@@ -43,6 +43,7 @@ module Calasmash
     def update
       plist_file = CFPropertyList::List.new(:file => server_plist_path)
       plist = CFPropertyList.native_types(plist_file.value)
+      ip = Socket.ip_address_list.find {|a| a.ipv4? && !a.ipv4_loopback?}.ip_address
 
       plist["url_preference"] = ip
       plist["port_preference"] = Calasmash::PORT
