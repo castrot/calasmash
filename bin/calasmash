@@ -2,4 +2,4 @@
 
 require 'calasmash'
 
-Calasmash::Runner.new(ARGV)
+Calasmash::Command.execute(*ARGV)
