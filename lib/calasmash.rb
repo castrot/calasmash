@@ -3,12 +3,16 @@
 
 require 'optparse'
 require "open3"
+require 'cfpropertylist'
+require 'find'
 
 require 'calasmash/command'
 require 'calasmash/compiler'
+require 'calasmash/plist'
 
 module Calasmash
   VERSION = "1.0.0"
+  PORT 		= 4567
 end
 
 #require 'optparse'

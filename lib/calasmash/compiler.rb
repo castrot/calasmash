@@ -54,6 +54,8 @@ module Calasmash
       end
     end
 
+    private
+
     #
     # Looks in the current directory for the workspace file and
     # gets it's name

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # coding: utf-8
 
 module Calasmash
@@ -24,10 +25,10 @@ module Calasmash
         return overview unless args.length > 1
 
         options = parse(args)
-
+        scheme = options[:scheme]
         # Compile the project
-        compile(options[:scheme]) do
-          puts "Plist stuff now"
+        compile(scheme) do
+          update_plist(scheme)
         end
       end
 
@@ -62,12 +63,21 @@ module Calasmash
       # @param  scheme [String] The scheme to compile
       # @param  &compiled [Block] Completion block
       #
-      # @return [type] [description]
       def compile(scheme, &compiled)
         compiler = Calasmash::Compiler.new(scheme)
         compiler.compile do |complete|
           yield
         end
+      end
+
+      #
+      # Update the applications plist so that the application
+      # connects to sinatra
+      # @param  scheme [String] The scheme related to the application
+      #
+      def update_plist(scheme)
+        plist = Calasmash::Plist.new(scheme)
+        plist.execute
       end
 
       #
