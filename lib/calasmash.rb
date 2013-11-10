@@ -5,6 +5,7 @@ require 'optparse'
 require "open3"
 require 'cfpropertylist'
 require 'find'
+require 'socket'
 
 require 'calasmash/command'
 require 'calasmash/compiler'
