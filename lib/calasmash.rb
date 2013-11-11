@@ -10,10 +10,10 @@ require 'socket'
 require 'calasmash/command'
 require 'calasmash/compiler'
 require 'calasmash/plist'
+require 'calasmash/cucumber'
 
 module Calasmash
-  VERSION = "1.0.0"
-  PORT 		= 4567
+  PORT = 4567
 end
 
 #require 'optparse'

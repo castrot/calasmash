@@ -25,10 +25,16 @@ module Calasmash
         return overview unless args.length > 1
 
         options = parse(args)
-        scheme = options[:scheme]
+        scheme  = options[:scheme]
+        ios     = options[:ios]
+        tags    = options[:tags]
+
         # Compile the project
         compile(scheme) do
+          # Update the plist
           update_plist(scheme)
+          # Run the tests
+          run_tests(ios, tags)
         end
       end
 
@@ -78,6 +84,16 @@ module Calasmash
       def update_plist(scheme)
         plist = Calasmash::Plist.new(scheme)
         plist.execute
+      end
+
+      #
+      # Run the cucumber tests, that's why we're here afterall
+      #
+      # @param  ios [String] The iOS version to test with
+      # @param  tags [Array] The cucumber tags to test with
+      def run_tests(ios, tags)
+        cucumber = Calasmash::Cucumber.new(ios, tags)
+        cucumber.test
       end
 
       #
