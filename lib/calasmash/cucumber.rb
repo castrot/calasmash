@@ -66,7 +66,7 @@ module Calasmash
     # Output a nice message for completing
     #
     def completed
-      puts "\n\nCucumber Completed 👌"
+      puts "\nCucumber Completed 👌"
     end
 
     #
