@@ -27,12 +27,8 @@ module Calasmash
       started
       status = nil
       output = ""
-      xcode_command = "xcodebuild -workspace #{workspace} \
-                       -scheme #{@scheme} \
-                       -sdk iphonesimulator \
-                       CODE_SIGN_IDENTITY="" \
-                       CODE_SIGNING_REQUIRED=NO"
-      Open3.popen3 xcode_command do |stdin, out, err, wait_thr|
+
+      Open3.popen3 command do |stdin, out, err, wait_thr|
         [out, err].each do |stream|
           Thread.new do
             until (line = stream.gets).nil? do
@@ -69,6 +65,16 @@ module Calasmash
     #
     def completed
       puts "\n\nCompiled 👌"
+    end
+
+    def command
+      xcode_command = "xcodebuild -workspace #{workspace} \
+                       -scheme #{@scheme} \
+                       -sdk iphonesimulator \
+                       CODE_SIGN_IDENTITY="" \
+                       CODE_SIGNING_REQUIRED=NO"
+
+      xcode_command
     end
 
     #
