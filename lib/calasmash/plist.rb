@@ -28,13 +28,29 @@ module Calasmash
     # Executes the plist tasks update and clear the old plists
     #
     def execute
+      started
       update
       clear
 
-      puts "Plist updated 👌"
+      completed
     end
 
     private
+
+    #
+    # Output a nice message for starting
+    #
+    def started
+      puts "\nUpdating plist"
+      puts "=============="
+    end
+
+    #
+    # Output a nice message for completing
+    #
+    def completed
+      puts "Plist updated 👌"
+    end
 
     #
     # Update the Xcode applications server.plist file

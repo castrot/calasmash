@@ -24,7 +24,7 @@ module Calasmash
     #
     # Returns nothing because it completes with a complete block
     def compile(&complete)
-      puts "\nCompiling\n"
+      started
       status = nil
       output = ""
       xcode_command = "xcodebuild -workspace #{workspace} \
@@ -49,12 +49,27 @@ module Calasmash
         puts "\n Compilation failed: \n\n #{output}"
         exit status
       else
-        puts "\n\nCompiled 👌"
+        completed
         complete.call(true) if complete
       end
     end
 
     private
+
+    #
+    # Output a nice message for starting
+    #
+    def started
+      puts "\nCompiling"
+      puts "=========\n"
+    end
+
+    #
+    # Output a nice message for completing
+    #
+    def completed
+      puts "\n\nCompiled 👌"
+    end
 
     #
     # Looks in the current directory for the workspace file and
