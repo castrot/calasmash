@@ -1,11 +1,13 @@
 PATH
   remote: .
   specs:
-    calasmash (0.0.1)
+    calasmash (1.0.0)
+      CFPropertyList
 
 GEM
   remote: https://rubygems.org/
   specs:
+    CFPropertyList (2.2.4)
     rake (10.1.0)
 
 PLATFORMS

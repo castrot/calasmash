@@ -56,9 +56,10 @@ module Calasmash
             options[:tags] << tag_set
           end
 
-          opt.on('-i', "--ios OS", "iOS simulator version of the sdk to run e.g. 6.0 or 7.0") do |tags|
+          opt.on("-i", "--ios OS", "iOS simulator version of the sdk to run e.g. 6.0 or 7.0") do |tags|
             options[:ios] = tags
           end
+
         end.parse!
 
         return options
