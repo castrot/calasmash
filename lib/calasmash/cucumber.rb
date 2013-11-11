@@ -58,7 +58,7 @@ module Calasmash
     # Output a nice message for starting
     #
     def started
-      puts "\nCucumber started"
+      puts "\nRunning Cucumber"
       puts "================\n"
     end
 
