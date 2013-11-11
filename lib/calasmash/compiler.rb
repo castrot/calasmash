@@ -67,6 +67,11 @@ module Calasmash
       puts "\n\nCompiled 👌"
     end
 
+    #
+    # Generate the string to be used as the xcode build command
+    # using the scheme ivar
+    #
+    # @return [String] The full xcode build command with args
     def command
       xcode_command = "xcodebuild -workspace #{workspace} \
                        -scheme #{@scheme} \
