@@ -79,7 +79,7 @@ module Calasmash
       command += " OS=ios#{@ios.to_i} SDK_VERSION=#{@ios}" if @ios
       command += " DEVICE_TARGET=simulator"
       command += " --format junit --out test-reports"
-      command += tag_arguments if tag_arguments
+      command += @tags.to_a.empty? ? "" : tag_arguments
 
       command
     end
@@ -90,7 +90,7 @@ module Calasmash
     #
     # @return [String] The --tags commands ready to go
     def tag_arguments
-      command = nil
+      command = ""
       @tags.each do |tag_set|
         command = "" unless command
         command += " --tags #{tag_set}"
