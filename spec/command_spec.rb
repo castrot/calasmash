@@ -62,20 +62,27 @@ describe Calasmash::Command do
 
       it "should set the cucumber ios version" do
         Calasmash::Cucumber.should_receive(:new).with("ios", anything)
-        Calasmash::Command.run_tests("ios", "tags")
+        Calasmash::Command.run_tests("ios", "tags", nil)
       end
 
       it "should set the cucumber tags" do
         Calasmash::Cucumber.should_receive(:new).with(anything, "tags")
-        Calasmash::Command.run_tests("ios", "tags")
+        Calasmash::Command.run_tests("ios", "tags", nil)
+      end
+
+      it "should set the format" do
+        @cucumber = Calasmash::Cucumber.new
+        Calasmash::Cucumber.stub(:new){@cucumber}
+
+        @cucumber.should_receive(:format=)
+        Calasmash::Command.run_tests(nil, nil, "format")
       end
 
       it "should start the tests" do
         @mock.should_receive(:test)
         Calasmash::Command.run_tests("ios", "tags")
       end
+
     end
-
   end
-
 end

@@ -28,13 +28,14 @@ module Calasmash
         scheme  = options[:scheme]
         ios     = options[:ios]
         tags    = options[:tags]
+        format  = options[:format]
 
         # Compile the project
         compile(scheme) do
           # Update the plist
           update_plist(scheme)
           # Run the tests
-          run_tests(ios, tags)
+          run_tests(ios, tags, format)
         end
       end
 
@@ -58,6 +59,10 @@ module Calasmash
 
           opt.on("-i", "--ios OS", "iOS simulator version of the sdk to run e.g. 6.0 or 7.0") do |tags|
             options[:ios] = tags
+          end
+
+          opt.on("-f", "--format FORMAT", "the format of the test reports to output") do |format|
+            options[:format] = format
           end
         end.parse!
 
@@ -91,8 +96,10 @@ module Calasmash
       #
       # @param  ios [String] The iOS version to test with
       # @param  tags [Array] The cucumber tags to test with
-      def run_tests(ios, tags)
+      # @param  format [String] The output format for the cucumber tests, Optional
+      def run_tests(ios, tags, format=nil)
         cucumber = Calasmash::Cucumber.new(ios, tags)
+        cucumber.format = format if format
         cucumber.test
       end
 
