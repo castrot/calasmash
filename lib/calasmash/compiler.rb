@@ -42,7 +42,7 @@ module Calasmash
       end
 
       if status != 0
-        puts "\n Compilation failed: \n\n #{output}"
+        puts "\nCompilation failed: \n\n #{output}"
         exit status
       else
         completed
