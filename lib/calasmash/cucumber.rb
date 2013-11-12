@@ -11,6 +11,12 @@ module Calasmash
   #
   class Cucumber
 
+    # Public: the output directory for the tests
+    attr_accessor :output
+
+    # Public: the output format for the tests
+    attr_accessor :format
+
     #
     # Create a new instance of Cucumber
     # @param  ios [String] The iOS version cucumber will run
@@ -78,7 +84,8 @@ module Calasmash
       command = "cucumber"
       command += " OS=ios#{@ios.to_i} SDK_VERSION=#{@ios}" if @ios
       command += " DEVICE_TARGET=simulator"
-      command += " --format junit --out test-reports"
+      command += " --format #{self.format}" if self.format
+      command += " --out #{self.output}" if self.output
       command += @tags.to_a.empty? ? "" : tag_arguments
 
       command
