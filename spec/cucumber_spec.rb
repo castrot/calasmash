@@ -48,6 +48,32 @@ describe Calasmash::Cucumber do
       @cucumber.instance_eval{command}.should_not match(/SDK_VERSION/)
     end
 
+    it "should add the format" do
+      @cucumber = Calasmash::Cucumber.new(nil, nil)
+      @cucumber.format = "test-format"
+
+      @cucumber.instance_eval{command}.should match(/--format test-format/)
+    end
+
+    it "should not add the format if missing" do
+      @cucumber = Calasmash::Cucumber.new(nil, nil)
+
+      @cucumber.instance_eval{command}.should_not match(/--format/)
+    end
+
+    it "should add the output" do
+      @cucumber = Calasmash::Cucumber.new(nil, nil)
+      @cucumber.output = "test-output"
+
+      @cucumber.instance_eval{command}.should match(/--out test-output/)
+    end
+
+    it "should not add the output if missing" do
+      @cucumber = Calasmash::Cucumber.new(nil, nil)
+
+      @cucumber.instance_eval{command}.should_not match(/--out/)
+    end
+
     it "should add the tags" do
       @cucumber = Calasmash::Cucumber.new(nil, ["tag1", "tag2"])
       @cucumber.instance_eval{command}.should match(/--tags tag1 --tags tag2/)
