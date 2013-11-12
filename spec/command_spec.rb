@@ -62,12 +62,12 @@ describe Calasmash::Command do
 
       it "should set the cucumber ios version" do
         Calasmash::Cucumber.should_receive(:new).with("ios", anything)
-        Calasmash::Command.run_tests("ios", "tags", nil)
+        Calasmash::Command.run_tests("ios", "tags")
       end
 
       it "should set the cucumber tags" do
         Calasmash::Cucumber.should_receive(:new).with(anything, "tags")
-        Calasmash::Command.run_tests("ios", "tags", nil)
+        Calasmash::Command.run_tests("ios", "tags")
       end
 
       it "should set the format" do
@@ -76,6 +76,14 @@ describe Calasmash::Command do
 
         @cucumber.should_receive(:format=)
         Calasmash::Command.run_tests(nil, nil, "format")
+      end
+
+      it "should set the output" do
+        @cucumber = Calasmash::Cucumber.new
+        Calasmash::Cucumber.stub(:new){@cucumber}
+
+        @cucumber.should_receive(:output=)
+        Calasmash::Command.run_tests(nil, nil, nil, "output")
       end
 
       it "should start the tests" do

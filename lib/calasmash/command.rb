@@ -29,13 +29,14 @@ module Calasmash
         ios     = options[:ios]
         tags    = options[:tags]
         format  = options[:format]
+        output  = options[:output]
 
         # Compile the project
         compile(scheme) do
           # Update the plist
           update_plist(scheme)
           # Run the tests
-          run_tests(ios, tags, format)
+          run_tests(ios, tags, format, output)
         end
       end
 
@@ -63,6 +64,10 @@ module Calasmash
 
           opt.on("-f", "--format FORMAT", "the format of the test reports to output") do |format|
             options[:format] = format
+          end
+
+          opt.on("-o", "--output OUTPUT", "the output path for the test results") do |output|
+            options[:output] = output
           end
         end.parse!
 
@@ -97,9 +102,11 @@ module Calasmash
       # @param  ios [String] The iOS version to test with
       # @param  tags [Array] The cucumber tags to test with
       # @param  format [String] The output format for the cucumber tests, Optional
-      def run_tests(ios, tags, format=nil)
+      # @param  output [String] The path to the output directory to output test reports to, Optional
+      def run_tests(ios, tags, format=nil, output=nil)
         cucumber = Calasmash::Cucumber.new(ios, tags)
         cucumber.format = format if format
+        cucumber.output = output if output
         cucumber.test
       end
 
