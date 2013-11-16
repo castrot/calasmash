@@ -39,7 +39,7 @@ The iOS application should contain a `server_config.plist` file in the following
 
 calasmash will update the port and url values before launching the application, your iOS application will need to use the plist values when running it's calabash-ios target.
 
-You can then use a method along these lines to get the url in the iOS application when running the calabash target.
+You can then use a method along these lines to get the url in the iOS application when running the calabash target and direct any API requests to the url.
 
 [Sample method](https://gist.github.com/alexfish/7505005)
 
