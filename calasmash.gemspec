@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Alex Fish"]
   spec.email         = ["fish@ustwo.co.uk"]
   spec.description   = "A gift for Juan"
-  spec.summary       = "Compile an app, run sinatra, point the app at sinatra, run the app tests with calabash"
+  spec.summary       = "Compile an app, point the app at sinatra, run cucumber"
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "guard-rspec"
 
-  spec.add_dependency("CFPropertyList")
+  spec.add_runtime_dependency("CFPropertyList")
 
   spec.executables << "calasmash"
 end
