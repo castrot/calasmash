@@ -115,9 +115,11 @@ module Calasmash
       #
       def overview
         s = "Usage: calasmash [OPTIONS]"
-        s << "\n  --tags -t the tags to pass to Cucumber"
+        s << "\n  --tags -t the tags to pass to cucumber, for multiple tags pass one per tag"
         s << "\n  --scheme -s the Xcode scheme to build"
         s << "\n  --ios -i the iOS version to build with"
+        s << "\n  --output -o The output directory for the test report"
+        s << "\n  --format -f The format of the test report"
 
         puts s
       end
