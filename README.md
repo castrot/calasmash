@@ -35,53 +35,15 @@ Your cucumber tests will need to start a Sinatra server before running with the 
 
 The iOS application should contain a `server_config.plist` file in the following format:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>port_preference</key>
-      <string></string>
-      <key>url_preference</key>
-      <string></string>
-    </dict>
-    </plist>
+[Sample plist](https://gist.github.com/alexfish/7505037)
 
 calasmash will update the port and url values before launching the application, your iOS application will need to use the plist values when running it's calabash-ios target.
 
 You can then use a method along these lines to get the url in the iOS application when running the calabash target.
 
-    + (NSURL *)calabashAPIURL
-    {
-        NSString *apiURLString = nil;
-        
-        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"server_config" ofType:@"plist"];
-        NSDictionary *serverConfig = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        
-        NSString *urlString = [serverConfig objectForKey:(NSString *)kURLPreference];
-        
-        if(urlString.length > 0)
-        {
-            if(![urlString hasPrefix:@"http://"])
-            {
-                apiURLString = [NSString stringWithFormat:@"http://%@", urlString];
-            }
-            else
-            {
-                apiURLString = urlString;
-            }
-            
-            NSString *portString = [serverConfig objectForKey:(NSString *)kPortPreference];
-            
-            if(portString)
-            {
-                apiURLString = [apiURLString stringByAppendingString:[NSString stringWithFormat:@":%@",portString]];
-            }
-        }
-        
-        return [NSURL URLWithString:apiURLString];
-    }
+[Sample method](https://gist.github.com/alexfish/7505005)
 
-## Contributing
+## Contributing 
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
