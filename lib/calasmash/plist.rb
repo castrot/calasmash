@@ -59,9 +59,8 @@ module Calasmash
     def update
       plist_file = CFPropertyList::List.new(:file => server_plist_path)
       plist = CFPropertyList.native_types(plist_file.value)
-      ip = Socket.ip_address_list.find {|a| a.ipv4? && !a.ipv4_loopback?}.ip_address
 
-      plist["url_preference"] = ip
+      plist["url_preference"] = server_ip
       plist["port_preference"] = Calasmash::PORT
 
       plist_file.value = CFPropertyList.guess(plist)
@@ -73,6 +72,14 @@ module Calasmash
     #
     def clear
       FileUtils.rm(simulator_plist_path, :force => true)
+    end
+
+    #
+    # The local IP address of the mock backend server
+    #
+    # @return [String] The mock backends IP
+    def server_ip
+      Socket.ip_address_list.find {|a| a.ipv4? && !a.ipv4_loopback?}.ip_address
     end
 
     #
