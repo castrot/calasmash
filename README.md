@@ -5,7 +5,31 @@ calasmash
 
 Calasmash provides an interface to run a suite of calabash-ios tests against an iOS application using a mocked backend.
 
-## Setup 
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'calasmash'
+
+And then execute:
+
+    $ bundle install
+
+## Usage
+
+Simply run the command below with your preferred arguments.
+
+    calasmash
+
+### Options
+
+    --tags -t the tags to pass to Cucumber, for multiple tags pass one -t option per tag
+    --scheme -s the Xcode scheme to build
+    --ios -i the iOS version to build with
+    --output -o The output directory for the test report
+    --format -f The format of the test report
+
+## Configuration 
 
 Your cucumber tests will need to start a Sinatra server before running with the launch `Before` step.
 
@@ -56,30 +80,6 @@ You can then use a method along these lines to get the url in the iOS applicatio
         
         return [NSURL URLWithString:apiURLString];
     }
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'calasmash'
-
-And then execute:
-
-    $ bundle
-
-## Usage
-
-Simply run the command below with your preferred arguments.
-
-    calasmash
-
-### Options
-
-    --tags -t the tags to pass to Cucumber, for multiple tags pass one -t option per tag
-    --scheme -s the Xcode scheme to build
-    --ios -i the iOS version to build with
-    --output -o The output directory for the test report
-    --format -f The format of the test report
 
 ## Contributing
 
