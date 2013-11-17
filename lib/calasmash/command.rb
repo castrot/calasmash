@@ -22,24 +22,31 @@ module Calasmash
       #
       # @return [type] [description]
       def execute(*args)
-        return overview unless args.length > 1
+        command = args.shift
 
-        options = parse(args)
-        scheme  = options[:scheme]
-        ios     = options[:ios]
-        tags    = options[:tags]
-        format  = options[:format]
-        output  = options[:output]
-
-        # Compile the project
-        compile(scheme) do
-          # Update the plist
-          update_plist(scheme)
-          # Run the tests
-          run_tests(ios, tags, format, output)
+        if command == "setup"
+          setup
+          return
         end
+
+        return overview unless args.length > 1
+        run_with_args(args)
       end
 
+      #
+      # Run calasmash with the parsed arguments
+      # @param  args [Array] The arguments passed to calasmash
+      #
+      def run_with_args(args)
+        options = parse(args)
+        # Compile the project
+        compile(options[:scheme]) do
+          # Update the plist
+          update_plist(options[:scheme])
+          # Run the tests
+          run_tests(options[:ios], options[:tags], options[:format], options[:output])
+        end
+      end
       #
       # parse the arguments and act on them
       # @param  args [Array] The arguments from execute
@@ -50,7 +57,7 @@ module Calasmash
         options[:tags] = []
 
         OptionParser.new do |opt|
-         opt.on("-s","--scheme SCHEME","the scheme to build") do |tags|
+          opt.on("-s","--scheme SCHEME","the scheme to build") do |tags|
             options[:scheme] = tags
           end
 
@@ -94,6 +101,14 @@ module Calasmash
       def update_plist(scheme)
         plist = Calasmash::Plist.new(scheme)
         plist.execute
+      end
+
+
+      #
+      # Runs the setup process
+      #
+      def setup
+        Calasmash::Setup.execute
       end
 
       #

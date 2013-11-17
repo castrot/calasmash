@@ -8,6 +8,7 @@ require 'find'
 require 'socket'
 
 require 'calasmash/command'
+require 'calasmash/setup'
 require 'calasmash/compiler'
 require 'calasmash/plist'
 require 'calasmash/cucumber'

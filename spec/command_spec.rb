@@ -13,6 +13,11 @@ describe Calasmash::Command do
       Calasmash::Command.should_receive(:overview)
       Calasmash::Command.execute
     end
+
+    it "should run the setup if setup is the first arg" do
+      Calasmash::Command.should_receive(:setup)
+      Calasmash::Command.execute("setup")
+    end
   end
 
   describe "when starting a compile" do

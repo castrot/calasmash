@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "calasmash"
-  spec.version       = "1.0.0"
+  spec.version       = "1.1.0.pre"
   spec.authors       = ["Alex Fish"]
   spec.email         = ["fish@ustwo.co.uk"]
   spec.description   = "A gift for Juan"
@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "guard-rspec"
 
-  spec.add_runtime_dependency("CFPropertyList")
+  spec.add_runtime_dependency "CFPropertyList"
+  spec.add_runtime_dependency "xcodeproject"
 
   spec.executables << "calasmash"
 end
