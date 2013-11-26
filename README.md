@@ -2,6 +2,7 @@ calasmash
 =========
 
 [![Gem Version](https://badge.fury.io/rb/calasmash.png)](http://badge.fury.io/rb/calasmash)
+[![Build Status](https://travis-ci.org/ustwo/calasmash.png?branch=master)](https://travis-ci.org/ustwo/calasmash)
 
 Calasmash provides an interface to run a suite of calabash-ios tests against an iOS application using a mocked backend.
 
