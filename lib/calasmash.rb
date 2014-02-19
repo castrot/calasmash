@@ -6,6 +6,7 @@ require "open3"
 require 'cfpropertylist'
 require 'find'
 require 'socket'
+require 'fileutils'
 
 require 'calasmash/command'
 require 'calasmash/compiler'
