@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    calasmash (1.0.0)
+    calasmash (1.0.2)
       CFPropertyList
 
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.2.4)
+    CFPropertyList (2.2.7)
     coderay (1.0.9)
     diff-lcs (1.2.5)
     ffi (1.9.0)

@@ -40,8 +40,7 @@ module Calasmash
         [out, err].each do |stream|
           Thread.new do
             until (line = stream.gets).nil? do
-              print "."
-              output << line
+              puts line
             end
           end
         end
@@ -51,7 +50,7 @@ module Calasmash
       end
 
       if status != 0
-        puts "\n Compilation failed: \n\n #{output}"
+        puts "\n Cucumber failed"
         exit status
       else
         completed
@@ -87,6 +86,7 @@ module Calasmash
       command += " --format #{self.format}" if self.format
       command += " --out #{self.output}" if self.output
       command += @tags.to_a.empty? ? "" : tag_arguments
+      command += " -c"
 
       command
     end

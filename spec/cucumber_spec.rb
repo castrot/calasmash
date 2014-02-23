@@ -83,5 +83,11 @@ describe Calasmash::Cucumber do
       @cucumber = Calasmash::Cucumber.new(nil, nil)
       @cucumber.instance_eval{command}.should_not match(/--tags/)
     end
+
+    it "should add the color flag" do
+      @cucumber = Calasmash::Cucumber.new(nil, nil)
+      @cucumber.instance_eval{command}.should match(/-c/)
+    end
+
   end
 end
