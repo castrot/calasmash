@@ -81,8 +81,7 @@ module Calasmash
     # @return [String] The cucumber command string
     def command
       command = "cucumber"
-      command += " OS=ios#{@ios.to_i} SDK_VERSION=#{@ios}" if @ios
-      command += " DEVICE_TARGET=simulator"
+      command += simulator_arguments if @ios
       command += " --format #{self.format}" if self.format
       command += " --out #{self.output}" if self.output
       command += @tags.to_a.empty? ? "" : tag_arguments
@@ -105,6 +104,22 @@ module Calasmash
       command
     end
 
+    #
+    # Generate the simulator version arguments that
+    # are best for certain versions of simulators
+    #
+    # @return [String] The simulator arguments
+    def simulator_arguments
+      if @ios
+        if @ios.to_i < 7
+          command = " OS=ios#{@ios.to_i} SDK_VERSION=#{@ios}"
+        else
+          command = " DEVICE_TARGET='iPhone Retina (4-inch) - Simulator - iOS #{@ios}'"
+        end
+      end
+
+      command
+    end
+
   end
 end
-
