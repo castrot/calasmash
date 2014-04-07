@@ -40,6 +40,20 @@ describe Calasmash::Cucumber do
       @cucumber.instance_eval{command}.should match(/OS=ios1 SDK_VERSION=1.0/)
     end
 
+    it "should add the ios 6 compatible tags when passing 6.1 as ios version" do
+      @cucumber = Calasmash::Cucumber.new("6.1", nil)
+      @cucumber.stub(:tag_arguments)
+
+      @cucumber.instance_eval{command}.should match(/OS=ios6 SDK_VERSION=6.1/)
+    end
+
+    it "should add the ios 7 compatible tags when passing 7.0 as ios version" do
+      @cucumber = Calasmash::Cucumber.new("7.0", nil)
+      @cucumber.stub(:tag_arguments)
+
+      @cucumber.instance_eval{command}.should match(/DEVICE_TARGET='iPhone Retina \(4-inch\) - Simulator - iOS 7.0'/)
+    end
+
     it "should not add the ios version if missing" do
       @cucumber = Calasmash::Cucumber.new(nil, nil)
       @cucumber.stub(:tag_arguments)
