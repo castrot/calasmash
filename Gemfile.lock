@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    calasmash (1.0.2)
+    calasmash (1.0.3)
       CFPropertyList
 
 GEM
