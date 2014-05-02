@@ -34,20 +34,6 @@ describe Calasmash::Cucumber do
   describe "when generating the command" do
 
     it "should add the ios version" do
-      @cucumber = Calasmash::Cucumber.new("1.0", nil)
-      @cucumber.stub(:tag_arguments)
-
-      @cucumber.instance_eval{command}.should match(/OS=ios1 SDK_VERSION=1.0/)
-    end
-
-    it "should add the ios 6 compatible tags when passing 6.1 as ios version" do
-      @cucumber = Calasmash::Cucumber.new("6.1", nil)
-      @cucumber.stub(:tag_arguments)
-
-      @cucumber.instance_eval{command}.should match(/OS=ios6 SDK_VERSION=6.1/)
-    end
-
-    it "should add the ios 7 compatible tags when passing 7.0 as ios version" do
       @cucumber = Calasmash::Cucumber.new("7.0", nil)
       @cucumber.stub(:tag_arguments)
 
@@ -58,8 +44,7 @@ describe Calasmash::Cucumber do
       @cucumber = Calasmash::Cucumber.new(nil, nil)
       @cucumber.stub(:tag_arguments)
 
-      @cucumber.instance_eval{command}.should_not match(/OS/)
-      @cucumber.instance_eval{command}.should_not match(/SDK_VERSION/)
+      @cucumber.instance_eval{command}.should_not match(/DEVICE_TARGET/)
     end
 
     it "should add the format" do
