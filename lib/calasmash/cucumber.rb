@@ -111,11 +111,7 @@ module Calasmash
     # @return [String] The simulator arguments
     def simulator_arguments
       if @ios
-        if @ios.to_i < 7
-          command = " OS=ios#{@ios.to_i} SDK_VERSION=#{@ios}"
-        else
           command = " DEVICE_TARGET='iPhone Retina (4-inch) - Simulator - iOS #{@ios}'"
-        end
       end
 
       command
